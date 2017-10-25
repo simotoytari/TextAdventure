@@ -1,4 +1,12 @@
 Wood cabin
 Old wood cabin with windows on east and west side. Door on south side of the house.
+0
+0
+none
+-
 Front of the cabin
 You are stanging infront of your cabin on a small proch. There is an axe right next to you for wood chopping. To the east of you mountains raise tall, almost blocking the morning sun. To the west there is a small river and waterfall thundering loudly. A path contines to the south, leading into the forest.
+1
+1
+lumberjack axe
+-
