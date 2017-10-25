@@ -1,8 +1,8 @@
 Wood cabin
-Old wood cabin with windows on east and west side. Door on south side of the house.
+Old wood cabin with windows on east and west side. Door on south side of the house. You can see a candle on the table and apple.
 0
 0
-none
+candle, apple
 -
 Front of the cabin
 You are stanging infront of your cabin on a small proch. There is an axe right next to you for wood chopping. To the east of you mountains raise tall, almost blocking the morning sun. To the west there is a small river and waterfall thundering loudly. A path contines to the south, leading into the forest.
@@ -10,3 +10,12 @@ You are stanging infront of your cabin on a small proch. There is an axe right n
 1
 lumberjack axe
 -
+
+//
+Kommentti osio
+1. rivi = paikan nimi
+2. rivi = paikan kuvaus
+3. rivi = vihollisten määrä
+4. rivi = vihollisen leveli (1-3)
+5. rivi = itemit mitä paikasta löytyy
+6. rivi = aina yksi viiva. lopettaa paikan osion
