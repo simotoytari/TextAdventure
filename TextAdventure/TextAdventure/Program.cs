@@ -99,6 +99,8 @@ namespace TextAdventure
 			Player player = new Player (Gender, Race, Class, Name);
 			Console.Clear ();
 			showStats (player);
+
+
 			//TESTS
 			//player.setPlayerHealth(10);
 			//player.setPlayerInventory ("Gold nugget");
@@ -126,15 +128,12 @@ namespace TextAdventure
 					Console.WriteLine("Introtext blaablaa. Choose actions.");
 					first_time = false;
 				}
-				/*
-				 * Check actions (like take, pick up, direction, eat)
-				 * if actions are valid do something
-				 * action = direction, check location, give loc desc
-				 * action = pick up/ take / eat, go to player inventory
-				 */
+
 				string action = Console.ReadLine().ToUpper();
 				if (action.Equals("STATS")) showStats(player);
-				else correct = 1;// prevents infinite loop
+				if (action.Equals("QUIT")) Environment.Exit(0);
+				checkActions(action);
+				Console.ReadLine();
 
 			}while(correct == 0);
 
@@ -143,6 +142,35 @@ namespace TextAdventure
 		//Check player input and choose correct actions
 		public static bool checkActions(string input)
 		{
+			Regex directions = new Regex (@"\b(SOUTH|NORTH|EAST|WEST)\b");
+			//Regex actions = new Regex (@"\b(PICK|USE|ATTACK|FLEE|RUN)\b");
+			Match m = directions.Match (input);
+			//Match m2 = actions.Match (input);
+			List<string> words = new List<string> ();
+			int matchCount = 0;
+			do 
+			{
+				Group g = m.Groups[0];
+				//Console.WriteLine(g);
+				words.Add(g.ToString());
+				matchCount++;
+				m = m.NextMatch();
+			} while(m.Success);
+			/*
+			do 
+			{
+				Group g = m.Groups[0];
+				//Console.WriteLine(g);
+				words.Add(g.ToString());
+				m2 = m2.NextMatch();
+			} while(m2.Success);
+			*/
+			//Acceptable words found!
+			if (matchCount > 0 && !words[0].Equals("")) {
+				Console.WriteLine ("Lets go {0}!", words[0]);
+			}
+			else
+				Console.WriteLine ("I didn't quite get that one..");
 			return true;
 		}
 
