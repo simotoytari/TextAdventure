@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace TextAdventure
 {
@@ -15,12 +16,26 @@ namespace TextAdventure
 			string Gender;
 			string Race;
 			string Class;
+			string Name;
 
 			//Lists
 			List<Locations> locations = new List<Locations>();
 
 			//Booleans
 			bool first_time = true;
+
+			//Player name
+			do {
+				//Console.Clear();
+				Console.WriteLine("Please give characters name:");
+				Name = Console.ReadLine().ToUpper();
+				Regex regex = new Regex("^[A-Z]+$");
+				Match match = regex.Match(Name);
+				if (match.Success) correct = 1;
+				else 
+					Console.WriteLine("Give a name that containts only letters between a-z.");
+			} while (correct == 0);
+			correct = 0;
 
 			//Character creation
 			do {
@@ -63,24 +78,25 @@ namespace TextAdventure
 			//Load locations
 			string[] lines = File.ReadAllLines("loc.txt");
 
-			string loc_name = "";
-			string loc_desc = "";
+			List<string> loc_details = new List<string> ();
+
 			for(int i = 0; i < lines.Length; i++)
 			{
-				if (i % 2 == 0)
-					loc_name = lines[i];
-				else
-				{
-					loc_desc = lines[i];
-					Locations loc = new Locations (loc_name, loc_desc);
-					locations.Add(loc);
+				if (lines [i] == "//")
+					break;
+				if (lines [i] != "-") {
+					loc_details.Add (lines [i]);
+				} else {
+					Locations loc = new Locations (loc_details[0], loc_details[1], loc_details[2], loc_details[3], loc_details[4]);
+					locations.Add (loc);
+					loc_details.Clear ();
 				}
 			}
 
 
 
 			//Make player
-			Player player = new Player (Gender, Race, Class);
+			Player player = new Player (Gender, Race, Class, Name);
 			Console.Clear ();
 			Console.WriteLine (player.getPlayerInfo() + "\n");
 			Console.WriteLine (player.getPlayerHealth() + "\n");
@@ -92,13 +108,21 @@ namespace TextAdventure
 			//TESTS
 			//player.setPlayerHealth(10);
 			//player.setPlayerInventory ("Gold nugget");
-			/*for(int i = 0; i < locations.Count; i++){
+			/*
+			for(int i = 0; i < locations.Count; i++){
 				Console.WriteLine (locations[i].getName());
 				Console.WriteLine(locations[i].getDesc());
+				Console.WriteLine (locations [i].getEnemyCount ());
+				Console.WriteLine (locations[i].getEnemyLvl());
+				List<string> itemss = locations [i].getItemsInLoc ();
+				for(int j = 0; j < itemss.Count; j++){
+					Console.WriteLine (itemss[j].ToString());
+				}
 				Console.ReadLine ();
 				Console.Clear ();
 			}
 			*/
+
 
 
 			//Game loop
@@ -112,10 +136,17 @@ namespace TextAdventure
 				 * if actions are valid do something
 				 * action = direction, check location, give loc desc
 				 * action = pick up/ take / eat, go to player inventory
-				 * /
+				 */
+				correct = 1;// prevents infinite loop
 
 			}while(correct == 0);
 
+		}
+
+		//Check player input and choose correct actions
+		public static bool checkActions(string input)
+		{
+			return true;
 		}
 	}
 }

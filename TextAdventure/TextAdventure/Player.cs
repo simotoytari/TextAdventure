@@ -9,17 +9,19 @@ namespace TextAdventure
 		private string Gender;
 		private string Race;
 		private string Class;
+		private string Name;
 		private int Health;
 		private int AttackDamage;
 		private int RangeDamage;
 		private int MagicDamage;
 		private List<string> inventory = new List<string>();
 
-		public Player (string Gender, string Race, string Class)
+		public Player (string Gender, string Race, string Class, string Name)
 		{
 			this.Gender = Gender;
 			this.Race = Race;
 			this.Class = Class;
+			this.Name = Name;
 			this.Health = 100;
 			this.AttackDamage = 1;
 			this.RangeDamage = 1;
@@ -32,7 +34,7 @@ namespace TextAdventure
 		//returns players general info
 		public string getPlayerInfo()
 		{
-			string output = String.Format("Your gender is {0}, race {1} and class {2}.",Gender, Race, Class);
+			string output = String.Format("{0} is a {1} {2}. Class {3}",Name,Race, Gender, Class);
 			return output;
 		}
 
