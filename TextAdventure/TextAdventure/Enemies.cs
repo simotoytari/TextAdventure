@@ -2,61 +2,52 @@
 
 namespace TextAdventure
 {
-	public class Enemies
+	public class Enemies : HumanoidBase
 	{
-		
-		private string name;
 		private string desc;
-		private int health;
-		private int AttackDamage;
-		private int AttackDamageResistance;
-		private int RangeDamageResistance;
-		private int MagicDamageResistance;
 
-		public Enemies (string name, string desc, int enemyLvl)
+		public Enemies (string desc, int enemyLvl, string name)
+			:base(name, 1, 1, 1, 1, 1, 1, 1)
 		{
-			this.name = name;
 			this.desc = desc;
 
 			Random rnd = new Random();
 
 			if (enemyLvl == 1) {
-				this.health = rnd.Next(20, 30);
-				AttackDamage = rnd.Next(1, 2);
-				AttackDamageResistance = rnd.Next(0, 1);
-				RangeDamageResistance = rnd.Next(0,1);
-				MagicDamageResistance = rnd.Next(0,1);
+				setHealth(rnd.Next(20, 30));
+				AddAttackDamage(rnd.Next(1, 2));
+				AddRangeDamage (rnd.Next(0,1));
+				AddMagicDamage (rnd.Next(0,1));
+				addADR(rnd.Next(0,1));
+				addRDR(rnd.Next(0,1));
+				addMDR(rnd.Next(0,1));
 			}
 			if (enemyLvl == 2) {
-				this.health = rnd.Next(30, 60);
-				AttackDamage = rnd.Next(2,3);
-				AttackDamageResistance = rnd.Next(1,2);
-				RangeDamageResistance = rnd.Next(1,2);
-				MagicDamageResistance = rnd.Next(1,2);
+				setHealth(rnd.Next(30, 60));
+				AddAttackDamage(rnd.Next(2, 3));
+				AddRangeDamage (rnd.Next(1,2));
+				AddMagicDamage (rnd.Next(1,2));
+				addADR(rnd.Next(1,2));
+				addRDR(rnd.Next(1,2));
+				addMDR(rnd.Next(1,2));
 			}
 			if (enemyLvl == 3) {
-				this.health = rnd.Next(60,100);
-				AttackDamage = rnd.Next(2,4);
-				AttackDamageResistance = rnd.Next(2,4);
-				RangeDamageResistance = rnd.Next(2,4);
-				MagicDamageResistance = rnd.Next(2,4);
+				setHealth(rnd.Next(60, 100));
+				AddAttackDamage(rnd.Next(2, 4));
+				AddRangeDamage (rnd.Next(2,3));
+				AddMagicDamage (rnd.Next(2,3));
+				addADR(rnd.Next(2,4));
+				addRDR(rnd.Next(2,4));
+				addMDR(rnd.Next(2,4));
 			}
 		}
 
+
 		public string enemyDesc(){
-			string output = String.Format ("Enemys is a {0}. {1}. It has {2} health.",name, desc, health);
+			string output = String.Format ("Enemys is a {0}. {1}. It has {2} health.",getName(), desc, getHealth());
 			return output;
 		}
-
-		//TODO: take to concideration players combat stats and enemys resistances to calculate taken damage
-		public void setEnemyHealth(int damage){
-			health = health - damage;
-			Console.WriteLine ("Enemy took {0}! It has {1} health left.", damage, health);
-		}
-
-		public int enemyDamage(){
-			return AttackDamage;
-		}
+			
 	}
 }
 

@@ -98,13 +98,7 @@ namespace TextAdventure
 			//Make player
 			Player player = new Player (Gender, Race, Class, Name);
 			Console.Clear ();
-			Console.WriteLine (player.getPlayerInfo() + "\n");
-			Console.WriteLine (player.getPlayerHealth() + "\n");
-			Console.WriteLine (player.getPlayerCS() + "\n");
-			player.getPlayerInventory ();//method will write out inventory to screen
-			Console.ReadLine ();
-			Console.Clear ();
-
+			showStats (player);
 			//TESTS
 			//player.setPlayerHealth(10);
 			//player.setPlayerInventory ("Gold nugget");
@@ -127,6 +121,7 @@ namespace TextAdventure
 
 			//Game loop
 			do{
+				Console.Clear();
 				if (first_time){
 					Console.WriteLine("Introtext blaablaa. Choose actions.");
 					first_time = false;
@@ -137,7 +132,9 @@ namespace TextAdventure
 				 * action = direction, check location, give loc desc
 				 * action = pick up/ take / eat, go to player inventory
 				 */
-				correct = 1;// prevents infinite loop
+				string action = Console.ReadLine().ToUpper();
+				if (action.Equals("STATS")) showStats(player);
+				else correct = 1;// prevents infinite loop
 
 			}while(correct == 0);
 
@@ -147,6 +144,16 @@ namespace TextAdventure
 		public static bool checkActions(string input)
 		{
 			return true;
+		}
+
+		//show stats
+		public static void showStats(Player player){
+			Console.WriteLine (player.getPlayerInfo() + "\n");
+			Console.WriteLine (player.getPlayerHealth() + "\n");
+			Console.WriteLine (player.getPlayerCS() + "\n");
+			player.getPlayerInventory ();//method will write out inventory to screen
+			Console.ReadLine ();
+			Console.Clear ();
 		}
 	}
 }

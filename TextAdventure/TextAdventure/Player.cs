@@ -4,28 +4,19 @@ using System.Collections.Generic;
 
 namespace TextAdventure
 {
-	public class Player
+	public class Player : HumanoidBase
 	{
 		private string Gender;
 		private string Race;
 		private string Class;
-		private string Name;
-		private int Health;
-		private int AttackDamage;
-		private int RangeDamage;
-		private int MagicDamage;
 		private List<string> inventory = new List<string>();
 
 		public Player (string Gender, string Race, string Class, string Name)
+			:base(Name, 100, 1, 1, 1, 1, 1, 1)
 		{
 			this.Gender = Gender;
 			this.Race = Race;
 			this.Class = Class;
-			this.Name = Name;
-			this.Health = 100;
-			this.AttackDamage = 1;
-			this.RangeDamage = 1;
-			this.MagicDamage = 1;
 			inventory.Add ("Rusty blade");
 			inventory.Add ("Moldy bread");
 			setPlayerDamage (Race, Class);
@@ -34,23 +25,17 @@ namespace TextAdventure
 		//returns players general info
 		public string getPlayerInfo()
 		{
-			string output = String.Format("{0} is a {1} {2}. Class {3}",Name,Race, Gender, Class);
+			string output = String.Format("{0} is a {1} {2}. Class {3}",getName(),Race, Gender, Class);
 			return output;
 		}
 
 		//returns players health
 		public string getPlayerHealth()
 		{
-			string output = String.Format ("You have {0} health.", Health);
+			string output = String.Format ("You have {0} health.", getHealth());
 			return output;
 		}
 
-		//set players health
-		public void setPlayerHealth(int damage)
-		{
-			Health = Health - damage;
-			Console.WriteLine ("You took {0} damage! Your health is {1}.", damage, Health);
-		}
 
 		//returns players inventory and writes it on screen
 		public List<string> getPlayerInventory()
@@ -73,7 +58,9 @@ namespace TextAdventure
 		public string getPlayerCS()
 		{
 			string output = String.Format ("Your combat stats are:\nAttack damage {0}\n" +
-				"Ranged damage {1}\nMagic damage {2}", AttackDamage, RangeDamage, MagicDamage);
+				"Ranged damage {1}\nMagic damage {2}\nAttack damage resistance {3}\n" +
+				"Range damage resistance {4}\nMagic damage resistance {5}\nType STATS if you wants to see your combat stats midgame.", 
+				getAttackDamage(), getRangeDamage(), getMagicDamage(), getARD(), getRDR(), getMDR());
 			return output;
 		}
 
@@ -81,29 +68,37 @@ namespace TextAdventure
 		private void setPlayerDamage(string race, string classs)
 		{
 			//set race bonuses
-			if (race == "ORC") 
-				Health = Health + 20;
-			if (race == "DWARF")
-				AttackDamage = AttackDamage + 1;
-			if (race == "HUMAN")
-				MagicDamage = MagicDamage + 1;
-			if (race == "ELF")
-				RangeDamage = RangeDamage + 1;
+			if (race == "ORC") {
+				heal (20);
+				addADR (2);
+			}
+			if (race == "DWARF") {
+				AddAttackDamage (2);
+				addMDR (2);
+			}
+			if (race == "HUMAN") {
+				AddMagicDamage (1);
+				addMDR (2);
+			}
+			if (race == "ELF") {
+				AddRangeDamage (1);
+				addRDR (2);
+			}
 
 			//set class bonuses
 			if (classs == "WARRIOR") {
-				Health = Health + 30;
-				AttackDamage = AttackDamage + 2;
+				heal (30);
+				AddAttackDamage (2);
 			}
-			if (classs == "HUNTER") 
-				RangeDamage = RangeDamage + 4;
+			if (classs == "HUNTER")
+				AddRangeDamage (4);
 			if (classs == "MAGE") {
-				RangeDamage = RangeDamage + 2;
-				MagicDamage = MagicDamage + 2;
+				AddRangeDamage (2);
+				AddMagicDamage (2);
 			}
 			if (classs == "THIEF") {
-				AttackDamage = AttackDamage + 2;
-				RangeDamage = RangeDamage + 2;
+				AddAttackDamage (2);
+				AddRangeDamage (2);
 			}
 		}
 	}

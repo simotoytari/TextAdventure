@@ -38,6 +38,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Locations.cs" />
     <Compile Include="Enemies.cs" />
+    <Compile Include="HumanoidBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

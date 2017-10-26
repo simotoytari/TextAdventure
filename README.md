@@ -8,4 +8,6 @@ kuinka iso maailma?
 
 TAVOITE? MAALI?
 
+pitää kattoa statit kuntoon
+
 säännöllisten että kontekstittomien kielten tekniikoita pitää lisätä
