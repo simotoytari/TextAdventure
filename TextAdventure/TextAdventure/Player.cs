@@ -38,11 +38,13 @@ namespace TextAdventure
 
 
 		//returns players inventory and writes it on screen
-		public List<string> getPlayerInventory()
+		public List<string> getPlayerInventory(bool writeInventory)
 		{
-			Console.WriteLine ("Your inventory:");
-			for(int i = 0; i < inventory.Count;i++){
-				Console.WriteLine (inventory[i]);
+			if (writeInventory) {
+				Console.WriteLine ("Your inventory:");
+				for (int i = 0; i < inventory.Count; i++) {
+					Console.WriteLine (inventory [i]);
+				}
 			}
 			return inventory;
 		}

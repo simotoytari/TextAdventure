@@ -127,12 +127,13 @@ namespace TextAdventure
 				if (first_time){
 					Console.WriteLine("Introtext blaablaa. Choose actions.");
 					first_time = false;
-				}
-
+				}else
+					Console.WriteLine("Give me next command please.");
 				string action = Console.ReadLine().ToUpper();
 				if (action.Equals("STATS")) showStats(player);
 				if (action.Equals("QUIT")) Environment.Exit(0);
-				checkActions(action);
+				checkActions(action, player);
+				Console.WriteLine("Press ENTER.");
 				Console.ReadLine();
 
 			}while(correct == 0);
@@ -140,37 +141,65 @@ namespace TextAdventure
 		}
 
 		//Check player input and choose correct actions
-		public static bool checkActions(string input)
+		public static bool checkActions(string input, Player player)
 		{
 			Regex directions = new Regex (@"\b(SOUTH|NORTH|EAST|WEST)\b");
-			//Regex actions = new Regex (@"\b(PICK|USE|ATTACK|FLEE|RUN)\b");
+			Regex actions = new Regex (@"\b(PICK|USE|ATTACK|FLEE|RUN)\b");
 			Match m = directions.Match (input);
-			//Match m2 = actions.Match (input);
-			List<string> words = new List<string> ();
-			int matchCount = 0;
+			Match m2 = actions.Match (input);
+			List<string> dir_words = new List<string> ();
+			List<string> act_words = new List<string> ();
 			do 
 			{
 				Group g = m.Groups[0];
-				//Console.WriteLine(g);
-				words.Add(g.ToString());
-				matchCount++;
+				dir_words.Add(g.ToString());
 				m = m.NextMatch();
 			} while(m.Success);
-			/*
+
 			do 
 			{
-				Group g = m.Groups[0];
-				//Console.WriteLine(g);
-				words.Add(g.ToString());
+				Group g = m2.Groups[0];
+				act_words.Add(g.ToString());
 				m2 = m2.NextMatch();
 			} while(m2.Success);
-			*/
-			//Acceptable words found!
-			if (matchCount > 0 && !words[0].Equals("")) {
-				Console.WriteLine ("Lets go {0}!", words[0]);
+
+			//Empty lists if "" added
+			if(dir_words[0].Equals("")) dir_words.Clear();
+			if (act_words [0].Equals ("")) act_words.Clear ();
+			//Lets check if we understood anything
+			if (dir_words.Count > 0) {
+				if (dir_words.Count > 1) {
+					Console.Write ("Which is it? ");
+					for (int i = 0; i < dir_words.Count - 1; i++) {
+						Console.Write ("{0} ", dir_words[i]);
+					}
+					Console.Write ("or {0}?\n", dir_words[dir_words.Count - 1]);
+				}else
+					Console.WriteLine ("Ok. Lets go {0}!", dir_words [0]);
 			}
-			else
-				Console.WriteLine ("I didn't quite get that one..");
+			else if (act_words.Count > 0) {
+				Console.WriteLine ("Action command!");
+			}
+			else {
+				Random r = new Random ();
+				int answer = r.Next (1, 4);
+				switch (answer)
+				{
+				case 1:
+					Console.WriteLine("Umm... I didn't really understand.");
+					break;
+				case 2:
+					Console.WriteLine("You want what?");
+					break;
+				case 3:
+					Console.WriteLine ("I didn't quite get that one..");
+					break;
+				default:
+					Console.WriteLine("Try again.");
+					break;
+				}
+			
+			}
 			return true;
 		}
 
@@ -179,7 +208,7 @@ namespace TextAdventure
 			Console.WriteLine (player.getPlayerInfo() + "\n");
 			Console.WriteLine (player.getPlayerHealth() + "\n");
 			Console.WriteLine (player.getPlayerCS() + "\n");
-			player.getPlayerInventory ();//method will write out inventory to screen
+			player.getPlayerInventory (true);//method will write out inventory to screen
 			Console.ReadLine ();
 			Console.Clear ();
 		}
