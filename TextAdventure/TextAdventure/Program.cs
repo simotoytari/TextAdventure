@@ -167,7 +167,7 @@ namespace TextAdventure
 			if(dir_words[0].Equals("")) dir_words.Clear();
 			if (act_words [0].Equals ("")) act_words.Clear ();
 			//Lets check if we understood anything
-			if (dir_words.Count > 0) {
+			if (dir_words.Count > 0) { // direction commands
 				if (dir_words.Count > 1) {
 					Console.Write ("Which is it? ");
 					for (int i = 0; i < dir_words.Count - 1; i++) {
@@ -177,7 +177,7 @@ namespace TextAdventure
 				}else
 					Console.WriteLine ("Ok. Lets go {0}!", dir_words [0]);
 			}
-			else if (act_words.Count > 0) {
+			else if (act_words.Count > 0) {//Action commands
 				Console.WriteLine ("Action command!");
 			}
 			else {
