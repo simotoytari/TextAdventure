@@ -41,7 +41,7 @@ namespace TextAdventure
 			//Game loop
 			do{
 				if (first_time){
-					Console.WriteLine("Welcome to House escape!\n");
+					Console.WriteLine("Welcome to House escape!\n Joku infoteksti miten liikutaan yms.");
 					first_time = false;
 				}
 				rooms[nav.getTila()].getInfo();//get current rooms name and description
