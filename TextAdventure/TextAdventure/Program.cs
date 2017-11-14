@@ -9,141 +9,57 @@ namespace TextAdventure
 	{
 		public static void Main (string[] args)
 		{
-			//Ints
-			int correct = 0;
-
-			//Strings
-			string Gender;
-			string Race;
-			string Class;
-			string Name;
 
 			//Lists
-			List<Locations> locations = new List<Locations>();
+			List<Room> rooms = new List<Room>();
 
 			//Booleans
 			bool first_time = true;
 
-			//Player name
-			do {
-				//Console.Clear();
-				Console.WriteLine("Please give characters name:");
-				Name = Console.ReadLine().ToUpper();
-				Regex regex = new Regex("^[A-Z]+$");
-				Match match = regex.Match(Name);
-				if (match.Success) correct = 1;
-				else 
-					Console.WriteLine("Give a name that containts only letters between a-z.");
-			} while (correct == 0);
-			correct = 0;
-
-			//Character creation
-			do {
-				Console.Clear();
-				Console.WriteLine("Please choose a gender as below:");
-				Console.WriteLine("Male/ Female");
-				Gender = Console.ReadLine().ToUpper();
-				if (Gender == "MALE") correct = 1;
-				if (Gender == "FEMALE") correct = 1;
-
-			} while (correct == 0);
-			correct = 0;
-
-			//Race creaation
-			do {
-				Console.Clear();
-				Console.WriteLine("Please choose race as below:");
-				Console.WriteLine("Human");
-				Console.WriteLine("Dwarf");
-				Console.WriteLine("Elf");
-				Console.WriteLine("Orc");
-				Race = Console.ReadLine().ToUpper();
-				if(Race == "HUMAN" || Race == "DWARF" || Race == "ELF" || Race == "ORC") correct = 1;
-			} while(correct == 0);
-			correct = 0;
-
-			//Class creation
-			do {
-				Console.Clear();
-				Console.WriteLine("Please choose class as below:");
-				Console.WriteLine("Warrior");
-				Console.WriteLine("Hunter");
-				Console.WriteLine("Mage");
-				Console.WriteLine("Thief");
-				Class = Console.ReadLine().ToUpper();
-				if (Class == "WARRIOR" || Class == "HUNTER" || Class == "MAGE" || Class == "THIEF") correct = 1;
-			} while (correct == 0);
-			correct = 0;
+			//ints
+			int correct = 0;
 
 			//Load locations
-			string[] lines = File.ReadAllLines("loc.txt");
+			string[] lines = File.ReadAllLines("rooms.txt");
+			List<string> room_d = new List<string> ();
 
-			List<string> loc_details = new List<string> ();
-
-			for(int i = 0; i < lines.Length; i++)
-			{
-				if (lines [i] == "//")
-					break;
-				if (lines [i] != "-") {
-					loc_details.Add (lines [i]);
-				} else {
-					Locations loc = new Locations (loc_details[0], loc_details[1], loc_details[2], loc_details[3], loc_details[4]);
-					locations.Add (loc);
-					loc_details.Clear ();
+			for (int i = 0; i < lines.Length; i++) {
+				if (i % 2 == 0)
+					room_d.Add (lines [i]);
+				else {
+					room_d.Add (lines [i]);
+					Room r = new Room (room_d [0], room_d [1]);
+					rooms.Add (r);
+					room_d.Clear ();
 				}
+
 			}
 
-
-
-			//Make player
-			Player player = new Player (Gender, Race, Class, Name);
-			Console.Clear ();
-			showStats (player);
-
-
-			//TESTS
-			//player.setPlayerHealth(10);
-			//player.setPlayerInventory ("Gold nugget");
-			/*
-			for(int i = 0; i < locations.Count; i++){
-				Console.WriteLine (locations[i].getName());
-				Console.WriteLine(locations[i].getDesc());
-				Console.WriteLine (locations [i].getEnemyCount ());
-				Console.WriteLine (locations[i].getEnemyLvl());
-				List<string> itemss = locations [i].getItemsInLoc ();
-				for(int j = 0; j < itemss.Count; j++){
-					Console.WriteLine (itemss[j].ToString());
-				}
-				Console.ReadLine ();
-				Console.Clear ();
-			}
-			*/
-
-
+			//new game
+			Navigation nav = new Navigation();
 
 			//Game loop
 			do{
-				Console.Clear();
 				if (first_time){
-					Console.WriteLine("Introtext blaablaa. Choose actions.");
+					Console.WriteLine("Welcome to House escape!\n");
 					first_time = false;
-				}else
-					Console.WriteLine("Give me next command please.");
+				}
+				rooms[nav.getTila()].getInfo();//get current rooms name and description
 				string action = Console.ReadLine().ToUpper();
-				if (action.Equals("STATS")) showStats(player);
+				//TODO:if (action.Equals("INVENTORY")) showInventory(player);
 				if (action.Equals("QUIT")) Environment.Exit(0);
-				checkActions(action, player);
-				Console.WriteLine("Press ENTER.");
+				checkActions(action, nav);
+				Console.WriteLine("\nPress ENTER.");
 				Console.ReadLine();
-
+				Console.Clear();
 			}while(correct == 0);
 
 		}
 
 		//Check player input and choose correct actions
-		public static bool checkActions(string input, Player player)
+		public static void checkActions(string input, Navigation nav)
 		{
-			Regex directions = new Regex (@"\b(SOUTH|NORTH|EAST|WEST)\b");
+			Regex directions = new Regex (@"\b(SOUTH|NORTH|EAST|WEST|UP|DOWN|((NORTH|SOUTH)EAST)|((NORTH|SOUTH)WEST))\b");
 			Regex actions = new Regex (@"\b(PICK|USE|ATTACK|FLEE|RUN)\b");
 			Match m = directions.Match (input);
 			Match m2 = actions.Match (input);
@@ -171,11 +87,15 @@ namespace TextAdventure
 				if (dir_words.Count > 1) {
 					Console.Write ("Which is it? ");
 					for (int i = 0; i < dir_words.Count - 1; i++) {
-						Console.Write ("{0} ", dir_words[i]);
+						Console.Write ("{0} ", dir_words [i]);
 					}
-					Console.Write ("or {0}?\n", dir_words[dir_words.Count - 1]);
-				}else
-					Console.WriteLine ("Ok. Lets go {0}!", dir_words [0]);
+					Console.Write ("or {0}?\n", dir_words [dir_words.Count - 1]);
+				} else {
+					//check if direction is ok
+					if (!nav.checkDir (dir_words [0])) {
+						Console.WriteLine ("Can't go that way.");
+					}
+				}
 			}
 			else if (act_words.Count > 0) {//Action commands
 				Console.WriteLine ("Action command!");
@@ -200,17 +120,7 @@ namespace TextAdventure
 				}
 			
 			}
-			return true;
 		}
-
-		//show stats
-		public static void showStats(Player player){
-			Console.WriteLine (player.getPlayerInfo() + "\n");
-			Console.WriteLine (player.getPlayerHealth() + "\n");
-			Console.WriteLine (player.getPlayerCS() + "\n");
-			player.getPlayerInventory (true);//method will write out inventory to screen
-			Console.ReadLine ();
-			Console.Clear ();
-		}
+			
 	}
 }

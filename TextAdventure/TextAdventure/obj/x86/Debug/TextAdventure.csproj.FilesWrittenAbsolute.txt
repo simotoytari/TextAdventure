@@ -3,3 +3,5 @@
 /home/simo/Documents/Projects/CSharp/Textadventure/TextAdventure/TextAdventure/bin/Debug/TextAdventure.exe
 /home/simo/Documents/Projects/CSharp/Textadventure/TextAdventure/TextAdventure/obj/x86/Debug/TextAdventure.exe
 /home/simo/Documents/Projects/CSharp/Textadventure/TextAdventure/TextAdventure/obj/x86/Debug/TextAdventure.exe.mdb
+/home/simo/Documents/Projects/CSharp/Textadventure/TextAdventure/TextAdventure/bin/Debug/TextAdventure.pdb
+/home/simo/Documents/Projects/CSharp/Textadventure/TextAdventure/TextAdventure/obj/x86/Debug/TextAdventure.pdb

@@ -1,0 +1,30 @@
+Foyer
+You are at the first floor foyer. To the north there is a family room, west a dining room, east a living room, stairs that go up anda closet right next to you.
+Living room
+There are two windows in the room shining a dim light. To the west if a door to the foyer.
+Dining room
+You step in the dining room. There is a large table in middle of the room and a door to the north leading in to kitchen. West of you is a door to the foyer.
+Family room
+Something something something. Door to the south and kitchen to the west.
+Kitchen
+Very typical kitchen. Small corridor at west, family room to the east and dining room to south.
+Corridor 3
+Behind you are two closets and north is a small bathroom.
+Bathroom 3
+Simple bathroom. Door at south.
+Upstairs foyer
+You climb up the stairs to the second floor foyer. There is a path north leading to a hallway.
+Upstairs hallway
+Dark hallway. There is a door north of you, doors to northeast and southeast and the hallway continues west.
+Bedroom 3
+Typical bedroom. One huge closet. Door to the southwest of you.
+Bedroom 2
+Typical bedroom with two closets and a door at the northwest corner.
+Bath 1
+Small bathroom. Door south.
+Bedroom 1
+Masterbedroom. Huge bed. Doors north and east of you.
+Corridor 2
+Small corridor that leads south to the master bedroom and has a door on the east side.
+Bathroom 2
+Master bathroom. Quite big. Door on the west side of the room. 
