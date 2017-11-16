@@ -1,5 +1,0 @@
-C:\Users\omistaja\Documents\Niko\Yliopisto\TIEA241 Automaatit ja kieliopit\Harkkatyö\TextAdventure\TextAdventure\TextAdventure\obj\x86\Debug\TextAdventure.exe
-C:\Users\omistaja\Documents\Niko\Yliopisto\TIEA241 Automaatit ja kieliopit\Harkkatyö\TextAdventure\TextAdventure\TextAdventure\obj\x86\Debug\TextAdventure.pdb
-C:\Users\omistaja\Documents\Niko\Yliopisto\TIEA241 Automaatit ja kieliopit\Harkkatyö\TextAdventure\TextAdventure\TextAdventure\bin\Debug\TextAdventure.exe
-C:\Users\omistaja\Documents\Niko\Yliopisto\TIEA241 Automaatit ja kieliopit\Harkkatyö\TextAdventure\TextAdventure\TextAdventure\bin\Debug\TextAdventure.pdb
-C:\Users\omistaja\Documents\Niko\Yliopisto\TIEA241 Automaatit ja kieliopit\Harkkatyö\TextAdventure\TextAdventure\TextAdventure\obj\x86\Debug\TextAdventure.csprojResolveAssemblyReference.cache
