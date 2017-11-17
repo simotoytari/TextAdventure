@@ -16,7 +16,7 @@ namespace TextAdventure
 
 		public Navigation ()
 		{
-			_tila = 0;
+			_tila = 1;
 
 			_conv.Add ("NORTH", 1);
 			_conv.Add ("SOUTH", 2);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace TextAdventure
 {
@@ -18,6 +19,10 @@ namespace TextAdventure
 
 			//ints
 			int correct = 0;
+
+			//strings
+			string intro = File.ReadAllText("intro.txt");
+			string guide = File.ReadAllText("guide.txt");
 
 			//Load locations
 			string[] lines = File.ReadAllLines("rooms.txt");
@@ -37,35 +42,31 @@ namespace TextAdventure
 
 			//new game
 			Navigation nav = new Navigation();
-
 			//Game loop
 			do{
-				if (first_time){
-					Console.WriteLine("Welcome to House Escape!\n");
-                    string intro = File.ReadAllText("intro.txt");
-                    Console.WriteLine(intro + "\n");
-                    Console.WriteLine("\n");
-                    string guide = File.ReadAllText("guide.txt");
-                    Console.WriteLine(guide + "\n");
-					first_time = false;
-				}
+				if (intro != null) Console.WriteLine(intro);
+				if (guide != null) Console.WriteLine(guide);
+				intro = null;
+				guide = null;
 				rooms[nav.getTila()].getInfo();//get current rooms name and description
+				Console.Write("Command: ");
 				string action = Console.ReadLine().ToUpper();
 				//TODO:if (action.Equals("INVENTORY")) showInventory(player);
 				if (action.Equals("QUIT")) Environment.Exit(0);
-				checkActions(action, nav);
-				Console.WriteLine("\nPress ENTER.");
-				Console.ReadLine();
+				string ans = checkActions(action, nav);
 				Console.Clear();
+				Console.WriteLine(ans + "\n");
+
 			}while(correct == 0);
 
 		}
 
 		//Check player input and choose correct actions
-		public static void checkActions(string input, Navigation nav)
+		public static string checkActions(string input, Navigation nav)
 		{
+			string ans = "";
 			Regex directions = new Regex (@"\b(SOUTH|NORTH|EAST|WEST|UP|DOWN|((NORTH|SOUTH)EAST)|((NORTH|SOUTH)WEST))\b");
-			Regex actions = new Regex (@"\b(PICK|USE|ATTACK|FLEE|RUN)\b");
+			Regex actions = new Regex (@"\b(PICK|USE)\b");
 			Match m = directions.Match (input);
 			Match m2 = actions.Match (input);
 			List<string> dir_words = new List<string> ();
@@ -88,22 +89,24 @@ namespace TextAdventure
 			if(dir_words[0].Equals("")) dir_words.Clear();
 			if (act_words [0].Equals ("")) act_words.Clear ();
 			//Lets check if we understood anything
-			if (dir_words.Count > 0) { // direction commands
+			if (dir_words.Count > 0 && act_words.Count <= 0) { // direction commands
 				if (dir_words.Count > 1) {
-					Console.Write ("Which is it? ");
+					StringBuilder s = new StringBuilder ();
+					s.Append ("Which is it? ");
 					for (int i = 0; i < dir_words.Count - 1; i++) {
-						Console.Write ("{0} ", dir_words [i]);
+						s.Append(String.Format("{0} ", dir_words [i]));
 					}
-					Console.Write ("or {0}?\n", dir_words [dir_words.Count - 1]);
+					s.Append(String.Format("or {0}?\n", dir_words [dir_words.Count - 1]));
+					ans = s.ToString ();
 				} else {
 					//check if direction is ok
 					if (!nav.checkDir (dir_words [0])) {
-						Console.WriteLine ("Can't go that way.");
+						ans = "Can't go that way.";
 					}
 				}
 			}
 			else if (act_words.Count > 0) {//Action commands
-				Console.WriteLine ("Action command!");
+				ans = "Action command!";
 			}
 			else {
 				Random r = new Random ();
@@ -111,20 +114,22 @@ namespace TextAdventure
 				switch (answer)
 				{
 				case 1:
-					Console.WriteLine("Umm... I didn't really understand.");
+					ans = "Umm... I didn't really understand.";
 					break;
 				case 2:
-					Console.WriteLine("You want what?");
+					ans = "You want what?";
 					break;
 				case 3:
-					Console.WriteLine ("I didn't quite get that one..");
+					ans = "I didn't quite get that one..";
 					break;
 				default:
-					Console.WriteLine("Try again.");
+					ans = "Try again.";
 					break;
 				}
 			
 			}
+
+			return ans;
 		}
 			
 	}
