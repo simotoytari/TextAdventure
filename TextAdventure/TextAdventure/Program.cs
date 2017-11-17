@@ -41,7 +41,12 @@ namespace TextAdventure
 			//Game loop
 			do{
 				if (first_time){
-					Console.WriteLine("Welcome to House escape!\n Joku infoteksti miten liikutaan yms.");
+					Console.WriteLine("Welcome to House Escape!\n");
+                    string intro = File.ReadAllText("intro.txt");
+                    Console.WriteLine(intro + "\n");
+                    Console.WriteLine("\n");
+                    string guide = File.ReadAllText("guide.txt");
+                    Console.WriteLine(guide + "\n");
 					first_time = false;
 				}
 				rooms[nav.getTila()].getInfo();//get current rooms name and description
