@@ -14,7 +14,7 @@ namespace TextAdventure
 		}
 
 		public void getInfo(){
-			Console.WriteLine(String.Format("Current room: {0}\n{1}",_name, _description));
+			Console.WriteLine(String.Format("Room: {0}\n{1}",_name, _description));
 		}
 	}
 }
